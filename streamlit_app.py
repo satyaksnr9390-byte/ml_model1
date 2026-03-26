@@ -2,15 +2,6 @@ import os
 import pandas as pd
 import streamlit as st
 from sklearn.linear_model import LinearRegression
-df = pd.read_csv("energy_level.csv")
-
-X = df[["sleep_hours","break_time"]]
-y = df["energy_level"]  
-
-model = LinearRegression()
-model.fit(X, y)
-
-
 
 BASE = os.path.dirname(__file__)
 csv_path = os.path.join(BASE, "energy_level.csv")
@@ -29,10 +20,10 @@ model, df = load_model()
 st.title("Energy Level Predictor")
 st.markdown("Input values with sliders and choose algorithm from dropdown.")
 
-sleep_hours = st.slider("Sleep hours", min_value=0.0, max_value=12.0, step=0.25, value=7.0)
-break_time = st.slider("Break time", min_value=0.0, max_value=120.0, step=5.0, value=30.0)
+sleep_hours = st.slider("Sleep hours", 0.0, 12.0, 7.0, 0.25)
+break_time = st.slider("Break time", 0.0, 120.0, 30.0, 5.0)
 
-algo = st.selectbox("Algorithm", ["LinearRegression"], index=0)
+algo = st.selectbox("Algorithm", ["LinearRegression"])
 st.write(f"Chosen: {algo}")
 
 if st.button("Predict"):
