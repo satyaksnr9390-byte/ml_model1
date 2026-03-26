@@ -3,8 +3,8 @@ import pandas as pd
 import streamlit as st
 from sklearn.linear_model import LinearRegression
 
-BASE = os.path.dirname(__file__)
-csv_path = os.path.join(BASE, "energy_level.csv")
+
+csv_path =  "energy_level.csv"
 
 @st.cache_data
 def load_model():
@@ -27,7 +27,9 @@ algo = st.selectbox("Algorithm", ["LinearRegression"])
 st.write(f"Chosen: {algo}")
 
 if st.button("Predict"):
-    pred = model.predict([[sleep_hours, break_time]])
+    input_df = pd.DataFrame([[sleep_hours, break_time]],
+                        columns=["sleep_hours", "break_time"])
+    pred = model.predict(input_df)
     st.success(f"Predicted energy level: {pred[0]:.3f}")
 
 st.write("---")
